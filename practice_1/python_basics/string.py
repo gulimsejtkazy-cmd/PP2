@@ -2,16 +2,16 @@ a = "Hello, World!"
 print(len(a))
 
 # Example 2
-print("It's alright")
-print("He is called 'Johnny'")
-print('He is called "Johnny"')
+txt = "CompanyX"
+
+x = txt.isalpha()
+
+print(x)
 
 # Example 3
-a = """Lorem ipsum dolor sit amet,
-consectetur adipiscing elit,
-sed do eiusmod tempor incididunt
-ut labore et dolore magna aliqua."""
-print(a)
+price = 59
+txt = f"The price is {price} dollars"
+print(txt)
 
 # Example 4
 a = "Hello, World!"
