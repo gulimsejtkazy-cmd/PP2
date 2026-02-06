@@ -12,5 +12,7 @@ if b > a:
 else:
   print("b is not greater than a")
 #Example 3
-#Example 4
-#Example 5
+#The bool() function allows you to evaluate any value, and give you True or False in return
+print(bool("Hello"))
+print(bool(15))
+
