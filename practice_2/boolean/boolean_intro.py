@@ -20,6 +20,3 @@ else:
 if not is_working:
     print("You are not working now")
     
-#Example 3
-#Example 4
-#Example 5

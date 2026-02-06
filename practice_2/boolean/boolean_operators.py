@@ -11,6 +11,3 @@ if temperature > 20 and temperature < 30:
 else:
     print("Bad weather")
     
-#Example 3
-#Example 4
-#Example 5
