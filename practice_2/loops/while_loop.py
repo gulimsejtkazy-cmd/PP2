@@ -12,7 +12,3 @@ while i < 6:
 else:
   print("i is no longer less than 6")
 
-#Example 3
-
-#Example 4
-#Example 5
