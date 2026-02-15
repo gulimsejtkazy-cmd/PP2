@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-ractice 03 – Functions, Lambda, Classes and Inheritance
-=======
-<<<<<<< HEAD
-=======
 Practice 03 – Functions, Lambda, Classes and Inheritance
->>>>>>> fb2810d7125bf56ab9ee9cc1d8cf2e2ff97d0752
-=======
-ractice 03 – Functions, Lambda, Classes and Inheritance
->>>>>>> 436ff6a (classes)
-
 This practice focuses on intermediate Python concepts including functions, lambda expressions, object-oriented programming, and inheritance. The exercises are based on Python fundamentals learned from tutorials and practical examples.
 
 Topics Covered
