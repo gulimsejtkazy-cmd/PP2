@@ -1,10 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ractice 03 – Functions, Lambda, Classes and Inheritance
 =======
 <<<<<<< HEAD
 =======
 Practice 03 – Functions, Lambda, Classes and Inheritance
 >>>>>>> fb2810d7125bf56ab9ee9cc1d8cf2e2ff97d0752
+=======
+ractice 03 – Functions, Lambda, Classes and Inheritance
+>>>>>>> 436ff6a (classes)
 
 This practice focuses on intermediate Python concepts including functions, lambda expressions, object-oriented programming, and inheritance. The exercises are based on Python fundamentals learned from tutorials and practical examples.
 
@@ -98,8 +102,12 @@ code reuse
 parent and child classes
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 polymorphism concepts
 =======
 polymorphism concepts
 >>>>>>> 93460f9ae8cb69f9b186028aea4063cd78a28615
 >>>>>>> fb2810d7125bf56ab9ee9cc1d8cf2e2ff97d0752
+=======
+polymorphism concepts
+>>>>>>> 436ff6a (classes)
