@@ -1,6 +1,4 @@
-# *args and **kwargs examples
 
-# *args
 def sum_all(*numbers):
     total = 0
     for n in numbers:
