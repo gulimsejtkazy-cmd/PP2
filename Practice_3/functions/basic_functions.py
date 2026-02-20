@@ -20,10 +20,3 @@ def square(x):
 
 print(square(4))
 
-
-# 4. function with list argument
-def print_list(items):
-    for item in items:
-        print(item)
-
-print_list([1, 2, 3])
