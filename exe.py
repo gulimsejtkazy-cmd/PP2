@@ -1,10 +1,6 @@
-import datetime
-a = input().split("-")
-b = input().split("-")
+from datetime import date
+d1 = date(2026, 2, 25)
+d2 = date(2026, 2, 24)
 
-c = datetime.date(int(a[0]), int(a[1]), int(a[2]))
-d = datetime.date(int(b[0]), int(b[1]), int(b[2]))
-
-s = c - d
-
-print(abs(s.total_seconds()))
+diff = d1 - d2
+print(diff.total_seconds()) 
