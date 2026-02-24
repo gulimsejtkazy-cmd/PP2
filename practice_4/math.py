@@ -1,6 +1,7 @@
 # 1
 a=float(input("Input degree: "))
-b=(a/180)*3.141592654
+pi=math.pi
+b=(a/180)*pi
 print("Output radian:",round(b,6))
 
 # 2
@@ -10,14 +11,13 @@ c=int(input("second value: "))
 print("Expected Output:",((c+b)/2)*h)
 
 # 3
-pi=3.141592654
-def tan(x):
-    return x + (x**3)/3
-h=int(input("Input number of sides: "))
-b=float(input("Input the length of a side "))
-
-area = (h * b**2) / (4 * tan(pi / h))
-print("The area of the polygon is:", round(area, 4))
+import math
+pi=math.pi
+n=int(input("Input number of sides: "))
+a=int(input("Input the length of a side: "))
+tan=math.tan(pi/n)
+x=(n*(a**2))/4*tan
+print("The area of the polygon is: ",math.ceil(x))
 
 # 4
 a=float(input())
