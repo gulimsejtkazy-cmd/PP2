@@ -1,17 +1,17 @@
 import json
 
-# открываем JSON файл
-with open("sample-data.json", "r") as file:
-    data = json.load(file)
 
-# заголовок
+with open("sample-data.json", "r") as file:# with → file will be closed automatically
+    data = json.load(file)# JSON → Python dictionary
+
+
 print("Interface Status")
 print("=" * 80)
 print(f"{'DN':50} {'Description':20} {'Speed':8} {'MTU':6}")
 print("-" * 80)
 
-# перебираем данные
-for item in data["imdata"]:
+
+for item in data["imdata"]: #We bypass the "imdata" list in the data dictionary
     attr = item["l1PhysIf"]["attributes"]
 
     dn = attr["dn"]
