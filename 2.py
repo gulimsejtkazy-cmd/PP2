@@ -1,7 +1,7 @@
-a=input()
-b=int(input())
+n=int(input())
 def even(n):
-    for i in range(b):
-        yield a
-for j in even(b):
-    print(a,end=" ")
+    for i in range(0,n+1):
+        if i%2==0:
+            yield i
+for j in even(n):
+    print(j,end=","if j<n-1 else"")

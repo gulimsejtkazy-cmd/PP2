@@ -1,7 +1,7 @@
 # 1
 import datetime
 today=datetime.date.today()
-x=today-datetime.timedelta(days=5)
+x=today-datetime.timedelta(days=5)#timedelta = interval used to add or subtract time
 print(x)
 
 # 2
@@ -20,9 +20,9 @@ new_time = now.replace(microsecond=0)
 
 print(new_time)
 # 4
-from datetime import date
-d1 = date(2026, 2, 25)
-d2 = date(2026, 2, 24)
+import datetime
+d1 = datetime.date(2026, 2, 25)
+d2 = datetime.date(2026, 2, 24)
 
 diff = d1 - d2
 print(diff.total_seconds()) 
