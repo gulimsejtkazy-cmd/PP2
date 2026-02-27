@@ -1,12 +1,8 @@
 import json
 
 
-with open("sample-data.json", "r") as file:# with → file will be closed automatically
-<<<<<<< HEAD
-    data = json.load(file)# JSON → Python dictionary
-=======
-    data = json.load(file) # JSON → Python dictionary
->>>>>>> dfe6ec9 (json)
+with open("sample-data.json", "r") as file:
+    data = json.load(file)# JSON → Python dictionary, 
 
 
 print("Interface Status")
@@ -15,11 +11,7 @@ print(f"{'DN':50} {'Description':20} {'Speed':8} {'MTU':6}")
 print("-" * 80)
 
 
-for item in data["imdata"]: #We bypass the "imdata" list in the data dictionary
-<<<<<<< HEAD
-=======
-
->>>>>>> dfe6ec9 (json)
+for item in data["imdata"]:# We bypass the "imdata" list in the data dictionary
     attr = item["l1PhysIf"]["attributes"]
 
     dn = attr["dn"]
