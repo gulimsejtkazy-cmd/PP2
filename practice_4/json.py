@@ -11,7 +11,7 @@ print(f"{'DN':50} {'Description':20} {'Speed':8} {'MTU':6}")
 print("-" * 80)
 
 
-for item in data["imdata"]:# We bypass the "imdata" list in the data dictionary
+for item in data["imdata"]:#iterates over each element of the "imdata" list one by one.
     attr = item["l1PhysIf"]["attributes"]
 
     dn = attr["dn"]
