@@ -1,7 +1,7 @@
-# 1
 import shutil
+
 # move file
-shutil.move("sample.txt", "new_folder/sample.txt")
+shutil.move("example.txt", "folder1/example.txt")
 # disappears from the old place
 # appears in a new one
 # Moves the file example.txt to the folder folder1
