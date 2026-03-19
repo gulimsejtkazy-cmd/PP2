@@ -4,6 +4,7 @@ names = ["Ali", "Aruzhan", "Dias"]
 # enumerate
 for i, name in enumerate(names):
     print(i, name)
+# Adds indices to list elements while iterating.
 
 # zip
 ages = [20, 21, 19]
