@@ -1,6 +1,6 @@
 # Music Player (pygame)
 
-Simple keyboard-controlled music player.
+Simple keyboard-controlled music player
 
 ## Controls:
 - P → Play
