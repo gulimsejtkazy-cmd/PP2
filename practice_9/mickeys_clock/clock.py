@@ -16,10 +16,9 @@ def load_scale(name, size):
     img = pygame.image.load(os.path.join(img_path, name)).convert_alpha()
     return pygame.transform.smoothscale(img, size)
 
-# 🔥 BIGGER SIZES
-background_img = load_scale("background.png", (580, 580))   # clock
-miki_img = load_scale("miki.png", (300, 300))               # 🐭 bigger Mickey
-left_hand = load_scale("hand_left_centered.png", (60, 180)) # 🖐 bigger hand
+background_img = load_scale("background.png", (580, 580))   
+miki_img = load_scale("miki.png", (300, 300))              
+left_hand = load_scale("hand_left_centered.png", (60, 180)) 
 right_hand = load_scale("hand_right_centered.png", (110, 110))
 
 center = (WIDTH // 2, HEIGHT // 2)
@@ -48,15 +47,15 @@ while running:
 
     screen.fill((255, 255, 255))
 
-    # 🕒 clock background
+    
     bg_rect = background_img.get_rect(center=center)
     screen.blit(background_img, bg_rect)
 
-    # 🐭 Mickey (bigger, inside clock)
+    
     miki_rect = miki_img.get_rect(center=center)
     screen.blit(miki_img, miki_rect)
 
-    # 🖐 hands (bigger)
+   
     sec_img, sec_rect = rotate(left_hand, second_angle)
     min_img, min_rect = rotate(right_hand, minute_angle)
 
