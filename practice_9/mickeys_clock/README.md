@@ -5,4 +5,3 @@ The clock shows real-time movement using a Mickey-style design.
 
 ---
 
-## 📁 Project Structure
