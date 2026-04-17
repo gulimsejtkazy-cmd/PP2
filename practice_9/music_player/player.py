@@ -5,52 +5,54 @@ class MusicPlayer:
     def __init__(self):
         pygame.mixer.init()
 
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        self.music_folder = os.path.join(base_path, "music")
+        base = os.path.dirname(os.path.abspath(__file__))
 
-        self.playlist = self.load_music()
+        self.tracks = [
+            {"name": "Mia Martina - Beast", "file": os.path.join(base, "music/track1.ogg")},
+            {"name": "Tame Impala - Dracula", "file": os.path.join(base, "music/track2.ogg")},
+            {"name": "Noah Cyrus - Again", "file": os.path.join(base, "music/track3.ogg")}
+        ]
+
         self.index = 0
 
-        print("Playlist:", self.playlist)
+        self.start_time = 0
+        self.length = 1  # длина трека (сек)
 
-    def load_music(self):
-        files = []
+    def load_length(self):
+        path = self.tracks[self.index]["file"]
+        sound = pygame.mixer.Sound(path)
+        self.length = sound.get_length()
 
-        for file in os.listdir(self.music_folder):
-            if file.endswith(".wav") or file.endswith(".mp3"):
-                files.append(os.path.join(self.music_folder, file))
-
-        files.sort()
-        return files
+    def get_name(self):
+        return self.tracks[self.index]["name"]
 
     def play(self):
-        if not self.playlist:
-            print("No music found")
+        path = self.tracks[self.index]["file"]
+
+        if not os.path.exists(path):
+            print("❌ FILE NOT FOUND:", path)
             return
 
-        pygame.mixer.music.load(self.playlist[self.index])
+        pygame.mixer.music.load(path)
         pygame.mixer.music.play()
-        print("Playing:", self.get_name())
+
+        self.load_length()
+        self.start_time = pygame.time.get_ticks()
 
     def stop(self):
         pygame.mixer.music.stop()
-        print("Stopped")
 
     def next(self):
-        if not self.playlist:
-            return
-
-        self.index = (self.index + 1) % len(self.playlist)
+        self.index = (self.index + 1) % len(self.tracks)
         self.play()
 
     def prev(self):
-        if not self.playlist:
-            return
-
-        self.index = (self.index - 1) % len(self.playlist)
+        self.index = (self.index - 1) % len(self.tracks)
         self.play()
 
-    def get_name(self):
-        if not self.playlist:
-            return "No music"
-        return os.path.basename(self.playlist[self.index])
+    def get_progress(self):
+        if self.length == 0:
+            return 0
+
+        current_time = (pygame.time.get_ticks() - self.start_time) / 1000
+        return min(current_time / self.length, 1)
