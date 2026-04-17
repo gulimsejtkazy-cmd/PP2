@@ -8,4 +8,4 @@ This project contains several small **Python + Pygame** applications created for
 
 ---
 
-## 📁 Project Structure
+
