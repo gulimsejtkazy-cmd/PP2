@@ -2,10 +2,8 @@ import csv
 import json
 from datetime import datetime
 from pathlib import Path
-
 import psycopg2
 from psycopg2 import errors
-
 from config import load_config
 from connect import setup_database
 
@@ -18,7 +16,6 @@ SORT_OPTIONS = {
     "3": ("date added", "c.created_at DESC, c.name ASC"),
 }
 
-
 def get_connection():
     try:
         return psycopg2.connect(**load_config())
@@ -26,13 +23,11 @@ def get_connection():
         print(f"Connection error: {error}")
         return None
 
-
 def resolve_path(filename):
     path = Path(filename)
     if path.is_absolute():
         return path
     return BASE_DIR / path
-
 
 def parse_birthday(raw_value):
     if raw_value in (None, ""):
@@ -45,18 +40,15 @@ def parse_birthday(raw_value):
     except ValueError as error:
         raise ValueError("Birthday must use YYYY-MM-DD format.") from error
 
-
 def normalize_group_name(raw_value):
     value = (raw_value or "Other").strip()
     return value.title() if value else "Other"
-
 
 def normalize_phone_type(raw_value):
     value = (raw_value or "mobile").strip().lower()
     if value not in VALID_PHONE_TYPES:
         raise ValueError("Phone type must be one of: home, work, mobile.")
     return value
-
 
 def normalize_phone_list(raw_phones, fallback_phone=None, fallback_type=None):
     phones = []
@@ -87,7 +79,6 @@ def normalize_phone_list(raw_phones, fallback_phone=None, fallback_type=None):
 
     return phones
 
-
 def ensure_group(cur, group_name):
     cur.execute(
         """
@@ -100,7 +91,6 @@ def ensure_group(cur, group_name):
         (normalize_group_name(group_name),),
     )
     return cur.fetchone()[0]
-
 
 def find_single_contact_id(cur, name):
     cur.execute(
@@ -119,7 +109,6 @@ def find_single_contact_id(cur, name):
         )
 
     return contact_id
-
 
 def phone_belongs_to_other_contact(cur, phone, contact_id=None):
     cur.execute(
@@ -151,7 +140,6 @@ def phone_belongs_to_other_contact(cur, phone, contact_id=None):
 
     return None
 
-
 def fetch_groups():
     conn = get_connection()
     if not conn:
@@ -166,7 +154,6 @@ def fetch_groups():
         return []
     finally:
         conn.close()
-
 
 def query_contact_rows(where_clauses=None, params=None, order_sql=None):
     conn = get_connection()
@@ -204,7 +191,6 @@ def query_contact_rows(where_clauses=None, params=None, order_sql=None):
     finally:
         conn.close()
 
-
 def rows_to_contacts(rows):
     contacts = {}
 
@@ -238,7 +224,6 @@ def rows_to_contacts(rows):
 
     return list(contacts.values())
 
-
 def print_contacts(contacts):
     if not contacts:
         print("No contacts found.")
@@ -262,7 +247,6 @@ def print_contacts(contacts):
         print(f"   Added: {created_at}")
         print(f"   Phones: {phones_text}")
 
-
 def choose_sort_sql():
     print("\nSort by:")
     print("1. Name")
@@ -271,7 +255,6 @@ def choose_sort_sql():
 
     choice = input("Choose sort option (1-3, default 1): ").strip() or "1"
     return SORT_OPTIONS.get(choice, SORT_OPTIONS["1"])[1]
-
 
 def show_contacts_with_filters():
     groups = fetch_groups()
@@ -296,10 +279,8 @@ def show_contacts_with_filters():
     contacts = rows_to_contacts(query_contact_rows(where_clauses, params, order_sql))
     print_contacts(contacts)
 
-
 def fetch_all_contacts(order_sql=None):
     return rows_to_contacts(query_contact_rows(order_sql=order_sql or SORT_OPTIONS["1"][1]))
-
 
 def create_contact(cur, name, email, birthday, group_name, phones):
     group_id = ensure_group(cur, group_name or "Other")
@@ -325,7 +306,6 @@ def create_contact(cur, name, email, birthday, group_name, phones):
             """,
             (contact_id, phone["phone"], phone["type"]),
         )
-
 
 def replace_contact(cur, contact_id, name, email, birthday, group_name, phones):
     group_id = ensure_group(cur, group_name or "Other")
@@ -353,7 +333,6 @@ def replace_contact(cur, contact_id, name, email, birthday, group_name, phones):
             """,
             (contact_id, phone["phone"], phone["type"]),
         )
-
 
 def import_from_csv(filename):
     csv_path = resolve_path(filename)
@@ -437,7 +416,6 @@ def import_from_csv(filename):
     finally:
         conn.close()
 
-
 def export_to_json(filename):
     json_path = resolve_path(filename)
     contacts = fetch_all_contacts()
@@ -475,7 +453,6 @@ def ask_duplicate_action(name):
         if choice in {"skip", "overwrite"}:
             return choice
         print("Please type skip or overwrite.")
-
 
 def import_from_json(filename):
     json_path = resolve_path(filename)
@@ -541,7 +518,6 @@ def import_from_json(filename):
     finally:
         conn.close()
 
-
 def search_all_fields():
     query = input("Enter name, email, or phone fragment: ").strip()
     if not query:
@@ -587,7 +563,6 @@ def search_all_fields():
 
     print_contacts(list(contacts_map.values()))
 
-
 def add_phone_to_contact():
     name = input("Contact name: ").strip()
     phone = input("New phone number: ").strip()
@@ -616,7 +591,6 @@ def add_phone_to_contact():
     finally:
         conn.close()
 
-
 def move_contact_to_group():
     name = input("Contact name: ").strip()
     group_name = input("New group: ").strip()
@@ -637,7 +611,6 @@ def move_contact_to_group():
         print(f"Could not move contact: {error}")
     finally:
         conn.close()
-
 
 def paginated_view():
     raw_limit = input("Page size (default 5): ").strip()
@@ -694,7 +667,6 @@ def paginated_view():
     finally:
         conn.close()
 
-
 def main():
     while True:
         print("\n--- PHONEBOOK TSIS1 ---")
@@ -740,7 +712,6 @@ def main():
             break
         else:
             print("Unknown menu option.")
-
 
 if __name__ == "__main__":
     setup_database()
