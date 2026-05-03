@@ -1,6 +1,6 @@
 Practice 11 – Pygame Projects
 
-This project extends the previous Practice 8 work and includes three mini-games/applications built using Python + Pygame.
+This project extends the previous Practice 10 work and includes three mini-games/applications built using Python + Pygame.
 
 📌 Contents
 Racer
