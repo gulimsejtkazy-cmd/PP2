@@ -1,13 +1,9 @@
 from pathlib import Path
-
 import psycopg2
-
 from config import load_config
-
 
 BASE_DIR = Path(__file__).resolve().parent
 SCHEMA_PATH = BASE_DIR / "schema.sql"
-
 
 class SnakeDatabase:
     def __init__(self):

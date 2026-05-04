@@ -3,10 +3,8 @@ from datetime import datetime
 import json
 from pathlib import Path
 import random
-
 import pygame
 import psycopg2
-
 from db import SnakeDatabase
 from ui import (
     Button,
@@ -17,7 +15,6 @@ from ui import (
     draw_progress_bar,
     draw_title,
 )
-
 
 BASE_DIR = Path(__file__).resolve().parent
 SETTINGS_PATH = BASE_DIR / "settings.json"
@@ -69,7 +66,6 @@ OPPOSITE_DIRECTIONS = {
     "right": "left",
 }
 
-
 @dataclass
 class FoodItem:
     position: tuple[int, int]
@@ -77,13 +73,11 @@ class FoodItem:
     color: tuple[int, int, int]
     expires_at: int
 
-
 @dataclass
 class FieldPowerup:
     kind: str
     position: tuple[int, int]
     expires_at: int
-
 
 class SnakeSession:
     def __init__(self, settings, username, personal_best, start_ticks):
@@ -320,6 +314,10 @@ class SnakeSession:
         if collision:
             if self.trigger_shield(now):
                 return None
+            if self.settings.get("sound_on") and getattr(self, "sounds", None):
+                sound = self.sounds.get("crash")
+                if sound:
+                    sound.play()
             return self.game_over_payload()
 
         self.snake.insert(0, next_head)
@@ -329,6 +327,10 @@ class SnakeSession:
             self.score += gained_score
             self.foods_eaten += 1
             self.food = None
+            if self.settings.get("sound_on") and hasattr(self, "sounds"):
+                sound = self.sounds.get("eat")
+                if sound:
+                    sound.play()
             self.personal_best = max(self.personal_best, self.score)
             self.set_status(f"Food eaten. +{gained_score} score.", now, 1300)
             self.handle_level_up(now)
@@ -455,6 +457,20 @@ class SnakeSession:
 class SnakeApp:
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
+
+        self.base_dir = BASE_DIR
+
+        self.sounds = {}
+        assets_path = self.base_dir / "assets"
+
+        try:
+            self.sounds["crash"] = pygame.mixer.Sound(assets_path / "crash.wav")
+            self.sounds["eat"] = pygame.mixer.Sound(assets_path / "money.wav")
+            pygame.mixer.music.load(assets_path / "background.wav")
+        except Exception:
+            self.sounds = {}
+
         self.base_dir = BASE_DIR
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("TSIS4 Snake")
@@ -561,10 +577,18 @@ class SnakeApp:
                 self.db_available = False
                 self.db_message = f"Database unavailable: {error.__class__.__name__}"
         self.session = SnakeSession(self.settings.copy(), username, personal_best, start_ticks)
+        self.session.sounds = self.sounds
         self.last_result = None
         self.state = "game"
 
+        if self.settings.get("sound_on", False):
+            try:
+                pygame.mixer.music.play(-1)
+            except:
+                pass
+
     def finish_game(self, result):
+        pygame.mixer.music.stop()
         if self.db_available:
             try:
                 self.db.save_session(result["username"], result["score"], result["level"])
@@ -666,6 +690,7 @@ class SnakeApp:
             if self.state == "game":
                 self.state = "menu"
                 self.session = None
+                pygame.mixer.music.stop()
             elif self.state != "menu":
                 self.state = "menu"
             return

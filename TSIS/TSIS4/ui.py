@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-
 import pygame
-
 
 PANEL_COLOR = (241, 243, 248)
 PANEL_BORDER = (97, 109, 126)
@@ -11,7 +9,6 @@ BUTTON_ACTIVE = (175, 206, 255)
 BUTTON_TEXT = (28, 32, 39)
 TITLE_COLOR = (248, 249, 252)
 TEXT_COLOR = (228, 233, 242)
-
 
 @dataclass
 class Button:
@@ -32,7 +29,6 @@ class Button:
             and event.button == 1
             and self.rect.collidepoint(event.pos)
         )
-
 
 @dataclass
 class TextInput:
@@ -84,23 +80,19 @@ class TextInput:
                 2,
             )
 
-
 def draw_panel(screen, rect, alpha=214):
     panel = pygame.Surface(rect.size, pygame.SRCALPHA)
     pygame.draw.rect(panel, (*PANEL_COLOR, alpha), panel.get_rect(), border_radius=18)
     screen.blit(panel, rect.topleft)
     pygame.draw.rect(screen, PANEL_BORDER, rect, 2, border_radius=18)
 
-
 def draw_title(screen, font, text, y):
     surface = font.render(text, True, TITLE_COLOR)
     screen.blit(surface, surface.get_rect(center=(screen.get_width() // 2, y)))
 
-
 def draw_label(screen, font, text, position, color=TEXT_COLOR):
     surface = font.render(text, True, color)
     screen.blit(surface, position)
-
 
 def wrap_text(font, text, max_width):
     words = text.split()
@@ -119,13 +111,11 @@ def wrap_text(font, text, max_width):
     lines.append(current)
     return lines
 
-
 def draw_multiline_label(screen, font, text, position, max_width, color=TEXT_COLOR, line_gap=2):
     x, y = position
     for line in wrap_text(font, text, max_width):
         draw_label(screen, font, line, (x, y), color)
         y += font.get_linesize() + line_gap
-
 
 def draw_progress_bar(screen, rect, ratio, fill_color, back_color=(55, 62, 76)):
     pygame.draw.rect(screen, back_color, rect, border_radius=8)

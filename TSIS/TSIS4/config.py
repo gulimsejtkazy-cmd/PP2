@@ -3,5 +3,5 @@ def load_config():
         "host": "localhost",
         "database": "phonebook_db",
         "user": "postgres",
-        "password": "12345678",
+        "password": "q3e1t7u5",
     }
